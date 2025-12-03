@@ -1,0 +1,52 @@
+# -----------------------------
+# Python cache & compiled files
+# -----------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment folders
+venv/
+.env/
+.venv/
+
+# -----------------------------
+# OS junk
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# IDE / editor-specific
+# -----------------------------
+.vscode/
+.idea/
+
+# -----------------------------
+# Secrets
+# -----------------------------
+.env
+*.env
+
+# -----------------------------
+# Logs & temporary files
+# -----------------------------
+*.log
+*.tmp
+*.swp
+
+# -----------------------------
+# Results (optional)
+# These can get huge — up to you
+# If you want results tracked, remove these lines
+# -----------------------------
+results/*
+!results/.gitkeep
+
+# -----------------------------
+# Your SP_RELATED project
+# -----------------------------
+# Ignore any accidental key dumps
+*_key.txt
+*api_key*
