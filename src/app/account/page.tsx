@@ -65,8 +65,9 @@ export default function AccountSettingsPage() {
         </section>
       </div>
 
-      <style jsx>{`
-        :global(body) {
+      {}
+      <style jsx global>{`
+        body {
           margin: 0;
           font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
             sans-serif;
