@@ -1,3 +1,6 @@
+// Portions of this file were developed with assistance from ChatGPT (OpenAI)
+// All final implementation and verification by John Althoff
+
 'use client';
 
 import Link from 'next/link';
@@ -394,3 +397,4 @@ export default function DemoPage() {
     </main>
   );
 }
+
