@@ -1,3 +1,6 @@
+// Portions of this file were developed with assistance from ChatGPT (OpenAI)
+// All final implementation and verification by John Althoff
+
 'use client';
 
 export default function AccountSettingsPage() {
@@ -239,3 +242,4 @@ export default function AccountSettingsPage() {
     </main>
   );
 }
+
