@@ -13,26 +13,36 @@ class GroqLLM:
     Thin wrapper around the raw Groq SDK client.
 
     This class:
-      - reads GROQ_API_KEY from the environment
+      - accepts api_key directly OR
+      - falls back to GROQ_API_KEY environment variable
       - calls the chat.completions endpoint
       - returns plain text responses
     """
 
-    def __init__(self, model_name: str = "llama-3.1-8b-instant", configs: Optional[Dict[str, Any]] = None) -> None:
-        api_key = os.getenv("GROQ_API_KEY")
-        if not api_key:
-            raise ValueError("Missing GROQ_API_KEY environment variable.")
+    def __init__(
+        self,
+        model_name: str = "llama-3.1-8b-instant",
+        configs: Optional[Dict[str, Any]] = None,
+        api_key: Optional[str] = None,
+    ) -> None:
 
-        # Raw Groq SDK client
-        self.client = Groq(api_key=api_key)
+        # Priority 1: explicitly passed api_key
+        # Priority 2: environment variable
+        final_api_key = api_key or os.getenv("GROQ_API_KEY")
+
+        if not final_api_key:
+            raise ValueError(
+                "Missing API key. Provide api_key argument or set GROQ_API_KEY environment variable."
+            )
+
+        self.client = Groq(api_key=final_api_key)
         self.model_name = model_name
 
-        # Default generation config
         self.config: Dict[str, Any] = {
             "temperature": 0.7,
             "top_p": 1.0,
-            # "max_tokens": 256,  # uncomment if you want to cap output length
         }
+
         if configs:
             self.config.update(configs)
 
@@ -79,9 +89,17 @@ class LLMJudge:
       - explanation
     """
 
-    def __init__(self, model_name: str = "llama-3.1-8b-instant") -> None:
-        # For judging, we use a low-temperature config.
-        self.llm = GroqLLM(model_name=model_name, configs={"temperature": 0.0})
+    def __init__(
+        self,
+        model_name: str = "llama-3.1-8b-instant",
+        api_key: Optional[str] = None,
+    ) -> None:
+
+        self.llm = GroqLLM(
+            model_name=model_name,
+            configs={"temperature": 0.0},
+            api_key=api_key,
+        )
 
     def _build_judge_prompt(self, goal: str, jailbreak_prompt: str, response: str) -> str:
         """

@@ -98,10 +98,24 @@ class EvaluationPipeline:
       5. Save detailed results + summary metrics
     """
 
-    def __init__(self, config: EvaluationConfig) -> None:
+    def __init__(
+        self,
+        config: EvaluationConfig,
+        api_key: Optional[str] = None,
+    ) -> None:
+
         self.config = config
-        self.target_client = GroqLLM(model_name=config.target_model)
-        self.judge_client = LLMJudge(model_name=config.judge_model)
+
+        self.target_client = GroqLLM(
+            model_name=config.target_model,
+            api_key=api_key,
+        )
+
+        self.judge_client = LLMJudge(
+            model_name=config.judge_model,
+            api_key=api_key,
+        )
+
         self.attacks: List[Attack] = []
 
     @classmethod
